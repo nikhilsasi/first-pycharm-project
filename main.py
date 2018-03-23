@@ -5,13 +5,13 @@
 # objective5 Based on spy rating display an appropriate message using at least one if, elif and else sequence
 # objective6 Print an appropriate final welcome message with the name, salutation, age and rating of the spy.
 
-print("welcome to my first project")
+print("welcome to my first spychat")
 spy_name = input("type your name\n")
 if len(spy_name) > 0:
       print(spy_name)
 else:
       print("enter correct name\n")
-salutation = input("what we call you(Mr. or mrs)?\n")
+salutation = input("what should we call you(Mr. or mrs)?\n")
 print("Alright " + salutation +" " + spy_name + "I'd like to know a little bit more about you...")  # objective2
 selection = input("does you want to continue (default or new) account")  # objective3
 if selection == "new":  # for new account
