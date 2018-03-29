@@ -62,7 +62,7 @@ if selection.upper() == "N":  # for new account
  # final message
  print("hello " + salutation + " " + spy_name + "your age is " + str(age) + "your rating " +rating_of_spy)  #objective6
 
-elif selection == "Y": #if user want the default one
+elif selection.upper() == "Y": #if user want the default one
         import default1  # importing data from another file
         menu(default1.default_salutation, default1.default_name)  # calling function
 else:
