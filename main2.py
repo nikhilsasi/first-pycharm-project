@@ -6,21 +6,21 @@ def menu(default_salutation, default_name):  #defining function
      print("1) Add a status update 2) Add a friend 3) Send a secret message")
      print(" 4) Read a secret message 5) Read chats from a user 6) Close application")
      choice = int(input("enter your choice"))  # entering option
-    if choice == 1:
+     if choice == 1:
         status = input("enter status:\n")
         print("%s %s status saved" % (default_salutation, default_name))
-    elif choice ==2:
+     elif choice ==2:
          print("1.your previous status\n 2. enter new status 3. exit")
          status_choice = input("enter your choice")
          if(status_choice == 1):
             status = None
-    elif choice == 3:
+     elif choice == 3:
         status = input("enter new message")
-    elif choice == 4:
+     elif choice == 4:
         status = input("enter tne message")
-    elif choice == 5:
+     elif choice == 5:
         status = input("reading chat from user")
-    else:
+     else:
         choice= False
 
    #printing full message
