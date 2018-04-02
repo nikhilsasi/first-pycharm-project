@@ -1,10 +1,9 @@
 #default data of user
 default_name = "nikhil"
 default_salutation = "mr"
-default_age = "22"
+default_age = 22
 spy = {
-    'name': 'nikhil'
-
+    'default_name': 'nikhil',
+    'default_salutation':'mr',
+    'default_age': 22,
 }
-import default1   # importing data from another file
-import friend

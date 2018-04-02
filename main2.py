@@ -1,126 +1,137 @@
-import default1   # importing data from another file
-import friend
-print("welcome to my spychat")  #welcoming new user
+from default1 import spy #importing function from other file
+from steganography.steganography import Steganography #importing steganography file
+from datetime import datetime
 
+
+def send_message():  #function for sendingmessage
+    friend_choice = select_friend()
+    original_image = raw_input("What is the name of the image?")
+    output_path = 'output.jpg'
+    text = raw_input("What do you want to say?")
+    Steganography.encode(original_image, output_path, text)
+    new_chat = {
+        "message": text,
+        "time": datetime.now(),
+        "sent_by_me": True
+    }
+    friends[friend_choice]['chats'].append(new_chat)
+    print("Your secret message is ready!")
+
+
+def select_friend():
+  item_number = 0
+  for friend in friends:
+    print '%d. %s' % (item_number + 1), friend['name']
+    item_number = item_number + 1
+    friend_choice= raw_input(input("choose from your friend"))
+    friend_choice_position = friend_choice - 1
+    return friend_choice_position
+
+def read_message():#function for reading message
+    sender = select_friend()
+    output_path = raw_input("What is the name of the file?")
+    secret_text = Steganography.decode(output_path)
+    new_chat = {
+          "message": secret_text,
+        "time": datetime.now(),
+        "sent_by_me": False
+    }
+
+    friends[sender]['chats'].append(new_chat)
+    print("Your secret message has been saved!")
 Friends_name = []
 Friends_age = []
 Friends_rating = []
 Friends_is_online = []
 
-def add_status(current_status)  :
 
-    updated_status = None
-    if len(current_status)>0:
-        print("You current status is:\n"+current_status)
-    else:
-        print("you didn't enter any status")
-    choice=input("do you want to select status from you old status or add a new one ?(previous/new):\n")
-    if choice.lower() == 'previous':
-        count = 0
-        status_messages = ['lalit', 'rohit']
-        for message in status_messages:
-            print(str(count+1) + " ." + message)
-            count = count+1
-        status_choice = int(input("Select status you want to set\n"))
-        new_status = status_messages[status_choice-1]
-        return new_status
-    else:
-        new_status = input("enter status:\n")
-        if len(new_status) > 0:
-            status_messages = ['lalit', 'rohit']
-            status_messages. append(new_status)
-            print("successfully entered")
+
+def add_friend():  # adding friend
+        dictionary_name = ['rahul', 'lalit', 'krishan']
+        Friend_name = raw_input("enter you friend_name:\n")
+        if Friend_name in dictionary_name:
+              print "name already exist"
         else:
-            print("please enter a valid status")
-    return new_status
+          print "its a new name continue"
+          Friend_salutation = raw_input("mr/mrs")
+          new_name = Friend_salutation + " " + Friend_name
+          Friend_age = int(input("enter your friend age\n"))
+          Friend_rating = float(input("what is rating of your friend:\n"))
+          print("%s %s is your new friend his/her age is %d and gave rating %0.2f" % (Friend_salutation, Friend_name, Friend_age,Friend_rating))
+          if len(Friend_name) > 0 and Friend_age > 17 and Friend_rating > 0:
+            Friends_name.append(new_name)
+            Friends_age.append(Friend_age)
+            Friends_rating.append(Friends_rating)
+            Friends_is_online.append(True)
+          else:
+              print("Please enter right details")
+friends=[]
 
-def add_friend():  #adding friend
-    friend_name = input("enter you friend_name:\n")
-    friend_salutation = input("\n")
-    new_name = friend_salutation+" "+friend_name
-    friend_age = int(input("enter your friend age\n"))
-    friend_rating = float(input("what is rating of your friend:\n"))
-    if len(friend_name) > 0 and friend_age > 17 and friend_rating > 0:
-        Friends_name.append(new_name)
-        Friends_age.append(friend_age)
-        Friends_rating.append(Friends_rating)
-        Friends_is_online.append(True)
-    else:
-        print("Please enter right details")
-    return len(new_name)
+def select_friend():
+  for friend in friends:
+    print '%s aged %d with rating %.2f is online' %(friend['name'], friend['age'], friend['rating'])
 
-def menu(default_salutation, default_name):  #defining function
+def menu(salu,name):  #defining function
     choice = True
-    # printing full message
-    print("your default name is " +
-         default1.default_salutation + " " + default1.default_name + " your default age is " + default1.default_age)
-
     while choice:
         print("1) Add a status update 2) Add a friend 3) Send a secret message")
         print(" 4) Read a secret message 5) Read chats from a user 6) Close application")
         choice = int(input("enter your choice"))  # entering option
         if choice == 1:
-            status = input("enter status:\n")
-            print("%s %s status saved" % (default_salutation, default_name))
+            status_choice_up =int(raw_input("1.add status or 2.choose from old status"))
+            if status_choice_up =="1":
+                status = raw_input("enter status:\n")
+                if len(status)>0:
+                    updated_status =status
+                    status.append(updated_status)
+                print(status)
+                print("%s %s status saved" % (salu, name))
+            elif status_choice_up =="2":
+                for message in status_message:
+                    read_message()
+            status_message =['rahul','nik']
+
         elif choice == 2:
-            friend.add_friend()
+            add_friend()
         elif choice == 3:
-            status = input("enter new message")
-        elif choice ==4:
-            print("1.your previous status\n 2. enter new status 3. exit")
-            status_choice = input("enter your choice")
-            if status_choice == 1:
-                status = None
-                print("no status present")
-            elif status_choice == 2:
-                status_new = input("enter new status")
-            else:
-                exit(0)
+            send_message()
+        elif choice == 4:
+            read_message()
+
         elif choice == 5:
             status = input("reading chat from user")
         else:
             choice = False
             print("quitting")
-
-
-def add_status(current_status_message):
-    if current_status_message != None:
-      print("Your current status message is " + current_status_message + "\n")
-    else:
-      print ('You don\'t have any status message currently \n')
-
-# asking for default user or new one
-selection = input("Do you want to continue as " +default1.default_salutation + " "
-                  + default1.default_name + " (Y/N)? ")
-
-# asking user for continuing as nikhil or creating new
-if selection.upper() == "N":# for new account
-    spy_name = input("enter new name")
-    if len(spy_name) > 0:# checking wheather name is entered or not
+print("welcome to spy_chat project") #welcome message
+selection = raw_input("continue as %s %s (y/n)" %(spy['default_salutation'], spy['default_name']))
+if selection.upper() == "Y":
+    menu(spy['default_salutation'], spy['default_name'])
+elif selection.upper() == "N":
+    spy_name = raw_input("enter new name")
+    if len(spy_name) > 0:
              print(spy_name)
+             salutation = raw_input("what we call you(Mr. or mrs)?\n")
+
+             print("Alright " + salutation + " " + spy_name + "I'd like to know a little bit more about you...")
+
+             age = int(raw_input("what's your age\n"))  # asking for age
+
+             rating_of_spy = float(raw_input("type the rating of program\n"))  # asking for rating
+             if float(rating_of_spy) >= 5:  # checking the user inputed rating
+                 print("you gave A++ grade")
+             elif float(rating_of_spy) > 4:
+                 print("you gave A+ grade")
+             elif float(rating_of_spy) > 3:
+                 print("you gave A grade")
+             elif float(rating_of_spy) > 2:
+                 print("you gave B+ grade")
+             else:
+                 print("you gave B grade")
+             print("hello %s %s your age %d is your rating %.2f" % (salutation, spy_name, age, rating_of_spy))
+
     else:
         print("enter correct name\n")
-    selection1 = input("what we call you(Mr. or mrs)?\n")
-    print("Alright " + selection1 + " " + spy_name + "I'd like to know a little bit more about you...")
 
-    salutation = input("what should we call you(Mr. or mrs)?\n")  #asking for salutation
-
-    age = input("what's your age\n")#asking for age
-
-    rating_of_spy = input("type the rating of program\n")  #asking for rating
-    if float(rating_of_spy) >= 5:  #checking the user inputed rating
-        print("you gave A++ grade")
-    elif float(rating_of_spy) > 4:
-         print("you gave A+ grade")
-    elif float(rating_of_spy) > 3:
-         print("you gave A grade")
-    elif float(rating_of_spy) > 2:
-         print("you gave B+ grade")
-    else:
-          print("you gave B grade")
-    print("hello " + salutation + " " + spy_name + "your age is " + str(age) + "your rating "
-          + rating_of_spy)
-elif selection.upper() == "Y": #if user want the default one
-        menu(default1.default_salutation, default1.default_name)  # calling function
 else:
-    print("enter choice between new and default")
+    print("enter your choice between y/n")
